@@ -1,0 +1,321 @@
+<!DOCTYPE HTML>
+<!-- 
+ **********************************************************
+
+             TUFTS CS 117 HOMEWORK ASSIGNMENT
+
+        Fill in your name, e-mail and answers to questions
+        in the sections provided below.
+
+          All questions are marked up: <li class="q">
+          All answers are marked up:   <li class="a">
+
+
+     PLEASE DO NOT MODIFY ANY THING OTHER THAN THE 
+     NAME, E-MAIL, AND ANSWER FIELDS (you may also add
+     css declarations in the <head> if you need them,
+     but usually you won't.
+
+ **********************************************************
+ -->
+
+
+<html lang="en">
+
+<head>
+     <meta charset="utf-8">
+     <title>Tufts CS 117 Assignment &#8212; File Copy Project Report</title>
+     <link rel="stylesheet" type="text/css" href="https://www.cs.tufts.edu/comp/117/style/homework.css" />
+</head>
+
+<body class="homework">
+
+
+     <!-- ******************************************************
+	   YOU MUST FILL IN YOUR NAME, UTLN AND EMAIL BELOW!!
+         (You may copy this from an earlier assignment
+                         if you like)
+
+     ****************************************************** -->
+
+
+     <div class="student">
+          <p>
+               <span class="label">Student1 name: </span>
+               Swapnil Gupta
+               <br>
+
+               <span class="label">UTLN: </span>
+               sgupta19
+               <br>
+
+               <span class="label">E-mail: </span>
+               <!-- DON'T FORGET UP UPDATE THE MAILTO: URI BELOW ALONG WITH
+     YOUR EMAIL IN THE ANCHOR.  IT SHOULD LOOK LIKE:
+ <a href="mailto:lady.gaga@cs.tufts.edu">lady.gaga@cs.tufts.edu</a>
+-->
+
+               <a href="mailto:swapnil.gupta@tufts.edu">swapnil.gupta@tufts.edu</a>
+               <br>
+               <br>
+               <br>
+               <span class="label">Student2 name: </span>
+               Mallory Grider
+               <br>
+               <span class="label">UTLN: </span>
+               mgride01
+               <br>
+
+               <span class="label">E-mail: </span>
+               <!-- DON'T FORGET UP UPDATE THE MAILTO: URI BELOW ALONG WITH
+     YOUR EMAIL IN THE ANCHOR.  IT SHOULD LOOK LIKE:
+ <a href="mailto:lady.gaga@cs.tufts.edu">lady.gaga@cs.tufts.edu</a>
+-->
+
+               <a href="mailto:mallorygrider@gmail.com">mallorygrider@gmail.com</a>
+
+               <br>
+          </p>
+     </div>
+
+
+
+
+     <div class="UpperLeftHeader">
+          <p>Tufts CS 117 (Fall 2023):
+               <br>
+               Internet-scale Distributed Systems
+          </p>
+     </div>
+
+
+     <!-- - - - - - - - - - - - - - - - - - - - - - - -
+		HOMEWORK TITLE
+  - -  - - - - - - - - - - - - - - - - - - - - - - -->
+
+
+     <div class="headerdiv">
+          <h1>
+               Tufts CS 117:<br>
+               File Copy Project Report
+          </h1>
+     </div>
+
+     <!-- ******************************************************
+
+              PLEASE ANSWER QUESTIONS IN THE SECTIONS
+	      LABELED class="a" (for answer)
+
+     ****************************************************** -->
+
+
+
+
+     <div class="main">
+
+          <h2 id="questions">Questions</h2>
+          <!-- - - - - - - - - - - - - - - - - - - - - - - -
+		QUESTION
+  - -  - - - - - - - - - - - - - - - - - - - - - - -->
+          <div class="qa">
+
+               <ol class="qa">
+                    <li class="q">What are the highest "nastiness" levels at which you believe your program will
+                         successfully copy an entire directory full of files? (We will test your programs using those
+                         levels
+                         on both the client and the server; if all you got working
+                         was the end-to-end check, then please tell us how to test your work. <em>Also: if high network
+                              nastiness messes up your ability to deal with file nastiness, you can give us two pairs:
+                              e.g. Test my client and server with networknastiness=4 and filenastiness=1 or
+                              networknastiness=0 and filenastiness=3)</em></li>
+                    <li class="a">
+                         <!-- replace XX and YY with the actual values -->
+                         Please test our client and server with: networknastiness=0 and filenastiness=0.
+                    </li>
+
+                    <li class="q">Is there anything else we should
+                         know about testing your code, or what you expect it to do
+                         (beyond what's explained in your report below)?</li>
+                    <li class="a">
+                         We expect it to successfully copy the files in the SRC/ directory to the TARGET/ directory with
+                         0 nastiness, but our program does not know that it successfully copied the last file in the
+                         SRC/ directory.
+                    </li>
+
+                    <li class="q">Did you get help from anyone other than your teammate? If "yes", then briefly explain
+                         who helped you and how.</li>
+                    <li class="a">
+                         We spoke with Naomi Meininger and Skylar Gilfeather about generic fwrite() questions. We got
+                         help from the TAs (thank you again).
+                    </li>
+
+
+                    <li class="q">(optional) Do you have any other comments on this assignment (e.g. was it worthwhile,
+                         what did you learn from it, do you have suggestions for improvment if the course is offered
+                         again)?</li>
+                    <li class="a">
+                         We both found it fruitful to think about the low-level mechanics of UDP programming. We also
+                         gained an appreciation for how bad some of the bugs introduced can be in this kind of
+                         programming.
+                    </li>
+
+               </ol>
+
+               <!-- * * * * * * * * * * * * * * * * * * * * * -->
+               <!--            REPORT GOES HERE               -->
+               <!-- * * * * * * * * * * * * * * * * * * * * * -->
+
+               <h2 id="reportbody">Report</h2>
+
+               <!-- Delete the entire paragraph below 
+     and replace it with your report. (Do NOT
+     keep the color:grey styling on your report! :-) -->
+
+
+
+               <h3> Overview and “Dumb” Protocol Design </h3>
+
+               <p>
+                    We could not achieve a fully-successful program with 0 nastiness. We currently have an
+                    implementation that will copy all files from SRC/ to TARGET/ with
+                    nastiness 0, but the server does not receive the final acknowledgement from the client to remove the
+                    .TMP suffix for the last-copied file. That is,
+                    we have a false failure.
+               </p>
+               <h3> Original Protocol Design </h3>
+
+               <p>
+                    On the client-side, every file in the user-inputted source directory is divided into 256-byte-sized
+                    chunks of data. As the file is split into these “chunks”, we instantiate a struct which contains the
+                    following information:
+               </p>
+
+               <pre>
+          struct packetCheckWriteInfo 
+          {
+               char filename[240];  // The name of the file to be copied
+               int packet_index;      // The current index of the chunk of file data 
+               int total_packets;      // The total number of chunks that make-up the file
+               long file_size;           // The size, in bytes, of the file to be copied
+               char data[256];         //  The data to be written in the file on the server’s TARGET directory
+          };
+          </pre>
+
+
+               <p>Each packet is sent to the server. Additionally, the SHA sum of the data in the struct is computed.
+
+                    The server loops continuously, waiting for incoming messages from the client. Once it receives a
+                    packet from the client,
+                    it checks whether it is a message concerning a file chunk or whether it is a message related to the
+                    final end-to-end ‘handshake’ (more on this later). If the message relates to a filechunk and the
+                    file has not been written yet on the server-side, we write the file with only the data from this one
+                    filechunk to the user-inputted target directory. A “.TMP” suffix is
+                    placed at the end of the file to signify that the file does not completely match its counterpart in
+                    the client’s source directory. The packet_index of the filechunk is used to write to the
+                    (packet_index * 256)th position of the file in the target directory. We write to the file as we
+                    receive the filechunks; because we write to the file according to each filechunk’s index, we do not
+                    care if packets arrive in the incorrect order. After the filechunk is written, the SHA sum is
+                    computed on the data stored in the struct. This is not correct; we should be computing the SHA sum
+                    of the filechunk of data that has been written. If we had time, we would have stored the written
+                    filechunk data into a buffer while writing to the file in TARGET/,
+                    and then performed the SHA sum on that buffer. After computing the SHA sum, the server sends a
+                    string message back to the client in the format: [SHA sum]%[index of filechunk]:[total number of
+                    filechunks for the particular file]*filename.
+
+               </p>
+               <p>The client parses the received packet with the SHA filechunk computation. The client recognizes that
+                    the packet is meant to signify the filechunk SHA sum (not the SHA sum for the whole file) because
+                    the provided filechunk index and number of filechunks in the message do not equal -1; it is not
+                    possible for filechunks to have a negative index. When the server sends a string message where the
+                    index and filechunk count equal -1, the SHA sum corresponds to the entire copied file in the TARGET/
+                    directory. The client compares the received filechunk SHA with the SHA it computed for the same
+                    chunk; if they do not match, the client reattempts delivering a packet with that filechunk. The
+                    client will make five attempts to resend a file chunk packet before giving up the process. If the
+                    SHA sums for the filechunk match, it proceeds packaging up the remaining filechunks for that file
+                    and sending them to the server.
+
+               </p>
+               <p>Once the server checks that it has written n amount of times for a file that has n filechunks
+                    (determined by the total_packets value in the struct and a hashmap on the server that maintains a
+                    count of how many times we have written to a particular file), it computes the SHA sum on the whole
+                    file present in the TARGET/ directory. It then sends the SHA sum for the whole file back to the
+                    client as a string in the format: [SHA sum]%-1:-1*filename. The server retries sending this message
+                    if it does not receive a response from the client. Note that the filechunk index and the total
+                    filechunk count are both set to -1, which the client uses to check that the SHA sum relates to the
+                    whole file, not a particular filechunk. -1 cannot be used as an index value or a total count,
+                    because it is a negative number.
+               </p>
+               <p>The client receives the message with the file SHA sum and computes the SHA sum for the original file
+                    in SRC/. If the sums match, it sends “CONFIRM%[filename]”. If the sums do not match, the client
+                    sends “DENY%[filename]”. The client attempts resending this message if it does not receive a
+                    response from the server. Depending on whether server is told to ‘confirm’ or ‘deny’ the file, the
+                    server either removes the .TMP suffix from the filename in TARGET/ or it deletes the file in
+                    TARGET/. After successfully deleting or renaming the file, the server sends one final confirmation
+                    that the file was either renamed or deleted back to the server. The server does not retry sending
+                    this final confirmation if it receives no response from the client. If the file copy fails for one
+                    file, the client will make five attempts to resend that file before giving up on that file.
+               </p>
+
+               <p>
+                    The code is written in a manner, that the client will handle chunks of the file that come out of
+                    order. However, it’s not working correctly for network nastiness > 0. Our idea is whenever the
+                    client is waiting to read a response from the server, it can receive any of the three types of
+                    incoming messages i.e., message to handle a chunk of the file, whole file, or confirm/deny message from
+                    the server. So, after a read, we are calling a generic function that will decide which function to
+                    call based on the incoming message to handle network nastiness.
+               </p>
+               <p>
+                    Also, each filechunk handling is done based on the data which they carry. So, if chunks of the file
+                    come out of order, the packet_index of the filechunk is used to read from the correct position of
+                    the file(packet_index * 256) in the source directory to evaluate the SHA sum on the client side. Also, the filename is
+                    retrieved from filechunk to ensure that we are reading the data from a correct file.
+               </p>
+               <h3> Debugging Woes </h3>
+
+               <p>We first got completely stuck during our write operation. We hit a bug in which we could not
+                    successfully write multiple times if we received multiple
+                    filechunks for one file; we only saw our file copy work for files less than 256 bytes (that is, we
+                    could only ever write one filechunk). We
+                    ultimately fixed this issue past the original due date for this assignment, but still encountered
+                    write issues. The current iteration of the code copies files from
+                    SRC/ to TARGET/ but misses correctly identifying one file as successfully copied (we have a false
+                    failure).
+               </p>
+
+               <p>Frankly, you will find little to no “NEEDSWORK” comments in the code because the whole thing is a
+                    flashing “NEEDSWORK.” Most of the control flow for both the client and the server should be
+                    seriously reconsidered.
+               </p>
+
+               <p>Related to the "NEEDSWORK": We also are likely not closing the socket and file when we need to be.
+                    There's also a bunch of memory that we need to explicitly free. </p>
+
+               <h3> Grading Logs </h3>
+
+               We did our best to document the major components of the end-to-end handshake outlined above. The comments
+               should be pretty self-explanatory.
+
+               <h3> Lessons Learned </h3>
+
+               <p>Obviously, designing algorithms for distributed systems is difficult. I think that much was clear to
+                    us going into the assignment, which is why we went back-and-forth on the design for a couple of
+                    days. We did our best to think through edge cases, nastiness levels, and retry logic. I think what
+                    became abundantly clear was,
+                    no matter how solid you think your design is, the low-level details matter. Further, the low-level
+                    details can introduce some gnarly bugs that completely derail the implementation of your design. We
+                    were both startled by how nasty these small bugs could be in this distributed context.
+                    This initially derailed our progress. We ended up stopping our debugging efforts in the program's
+                    current iteration for fear of falling too far behind in the class. We currently
+                    believe that we are missing one last socket read() from the client.
+               </p>
+
+               <h3>Teammate Statement </h3>
+
+               <p>Both teammates were present for the coding and design of this project.</p>
+
+
+          </div>
+     </div>
+</body>
+
+</html>
