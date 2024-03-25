@@ -219,7 +219,11 @@ void writeToFile(NASTYFILE &curr_file, packetCheckWriteInfo filechunk, int file_
 
         return;
     }
-
+    
+    //off_t lseek(int fd, off_t offset, int whence); fd: The file descriptor of the file; 
+    //offset: The new position of the file offset, relative to the position specified by whence. This is a byte count, and it can be positive or negative.
+    //whence: This determines how the offset is applied. like whether it is applied from the  beginning of the file (SEEL_SET)or
+    // the end of the file (SEEK_END)
     curr_file.fseek(filechunk.packet_index * filechunk_data_size, SEEK_SET);
     int len = curr_file.fwrite(filechunk.data, 1, filechunk_data_size);
 
